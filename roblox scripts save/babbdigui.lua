@@ -1,5 +1,7 @@
+--loadstring(game:HttpGet('https://raw.githubusercontent.com/sugoma-1232/theo222_roblox_scripts/refs/heads/main/roblox%20scripts%20save/babbdigui.lua'))()
 repeat
 	task.wait()
+
 until game:IsLoaded()
 local Players = game.Players
 local ourplayer = Players.LocalPlayer
@@ -22,7 +24,6 @@ local dospeed = false
 local dojump = false
 local walkspeedvar = 400
 local jumppowervar = ourhum.JumpPower
-
 local highlightplayers = false
 local washighlightingplayers = false
 
@@ -57,7 +58,9 @@ local aimbot = false
 for _, v in pairs(ourplayer.PlayerGui:GetChildren()) do
 	print(v.ClassName)
 end
-
+local function getdistance(pos1, pos2)
+	return (pos1 - pos2).Magnitude
+end
 local function opendarkdex()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/main/dex.lua"))()
 end
@@ -69,8 +72,19 @@ end
 local function openinfyeild()
     loadstring(game:HttpGet('https://raw.githubusercontent.com/edgeiy/infiniteyield/master/source'))()
 end
-local function getdistance(pos1, pos2)
-	return (pos1 - pos2).Magnitude
+local function rungoonscript()
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/sugoma-1232/theo222_roblox_scripts/refs/heads/main/roblox%20scripts%20save/goon.lua'))()
+end
+local function runspinscript()
+	getgenv().spinmethod = false
+	getgenv().spinstrength = 40
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/sugoma-1232/theo222_roblox_scripts/refs/heads/main/roblox%20scripts%20save/spin.lua'))()
+end
+local function runnukescript()
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/sugoma-1232/theo222_roblox_scripts/refs/heads/main/roblox%20scripts%20save/nuke.lua'))()
+end
+local function runsubsonicscript()
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/sugoma-1232/theo222_roblox_scripts/refs/heads/main/roblox%20scripts%20save/subsonic.lua'))()
 end
 local function uiinit()
 	local function toggleabutton(a)
@@ -160,6 +174,10 @@ local function uiinit()
 	local darkdexbutton = buttontemplate:Clone();darkdexbutton.Text = "darkdex";darkdexbutton.Parent = scrollingframe;darkdexbutton.Position = UDim2.new(0,0,0,(21 * 8))
 	local simplespybutton = buttontemplate:Clone();simplespybutton.Text = "simplespy";simplespybutton.Parent = scrollingframe;simplespybutton.Position = UDim2.new(0,0,0,(21 * 9))
 	local yeildbutton = buttontemplate:Clone();yeildbutton.Text = "inf yeild";yeildbutton.Parent = scrollingframe;yeildbutton.Position = UDim2.new(0,0,0,(21 * 10))
+	local goonbutton = buttontemplate:Clone();goonbutton.Text = "goon scr(n)";goonbutton.Parent = scrollingframe;goonbutton.Position = UDim2.new(0,0,0,(21 * 11))
+	local spinbutton = buttontemplate:Clone();spinbutton.Text = "spin scr(p)";spinbutton.Parent = scrollingframe;spinbutton.Position = UDim2.new(0,0,0,(21 * 12))
+	local nukebutton = buttontemplate:Clone();nukebutton.Text = "nuke scr(p)";nukebutton.Parent = scrollingframe;nukebutton.Position = UDim2.new(0,0,0,(21 * 13))
+	local movescriptbutton = buttontemplate:Clone();movescriptbutton.Text = "tp scr(...)";movescriptbutton.Parent = scrollingframe;movescriptbutton.Position = UDim2.new(0,0,0,(21 * 14))
 	if noclip then toggleabutton(noclipbutton) end
 	if fling then toggleabutton(flingbutton) end
 	if antifling then toggleabutton(antiflingbutton) end
@@ -208,6 +226,18 @@ local function uiinit()
 	end)
 	yeildbutton.MouseButton1Click:Connect(function()
 		openinfyeild()
+	end)
+	movescriptbutton.MouseButton1Click:Connect(function()
+		task.spawn(runsubsonicscript)
+	end)
+	goonbutton.MouseButton1Click:Connect(function()
+		task.spawn(rungoonscript)
+	end)
+	spinbutton.MouseButton1Click:Connect(function()
+		task.spawn(runspinscript)
+	end)
+	nukebutton.MouseButton1Click:Connect(function()
+		task.spawn(runnukescript)
 	end)
 	gui.Parent = ourplayer.PlayerGui
 
