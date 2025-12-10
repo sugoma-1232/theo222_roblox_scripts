@@ -477,3 +477,4 @@ ourplayer.CharacterAdded:Connect(function()
 	uiinit()
 end)
 uiinit()
+
