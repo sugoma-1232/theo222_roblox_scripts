@@ -4,3 +4,4 @@ spin - theres 2 spin methods 1rst(method = true) one literaly rotating your rota
 blox fruits cash generator - self explainotary, my first script, based on another open source script.
 babbdigui - main thing i have worked on at least for a month.
 animationtracker(57% ai) - for exploit devs to steal public animation ids, auto tracks all animations, P to copy all of the public animations you previusly played.
+subsonic - movement script, the binds are: V to aurafarm, T to aurafarm to the side, E to set the closest player as target*, C to tp behind the target*, R to diddle the target(not sure if it works cuz the amount of packets send to the server), X to tp forward, Z to fly upwards P to freze yourself,
