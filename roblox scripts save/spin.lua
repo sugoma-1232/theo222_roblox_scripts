@@ -12,7 +12,14 @@ local isplayerdead = false
 local curtarget = nil
 local ischat = false
 local a = nil
-local strengh = 20
+local strengh = getgenv().spinstrength
+local method = getgenv().spinmethod
+if method == nil then
+	method = false
+end
+if strengh == nil then
+	strengh = 20
+end
 local b = CFrame.Angles(0,math.pi/15 * strengh,0)
 local method = false
 local function OnDeath()
@@ -48,4 +55,3 @@ else
 		ourhum.AutoRotate = false
 	end
 end
-
