@@ -50,10 +50,8 @@ else
 	ourhum.AutoRotate = false
 	while task.wait() and not ourinputservice:isKeyDown(Enum.KeyCode.P) do
 		ourhum.AutoRotate = false
-		ourhumrp.AssemblyAngularVelocity = ourhumrp.AssemblyAngularVelocity + Vector3.new(0, (math.pi/15 * strengh), 0
+		ourhumrp.AssemblyAngularVelocity = ourhumrp.AssemblyAngularVelocity + Vector3.new(0, (math.pi/15 * strengh), 0)
 		ourhum.AutoRotate = false
 	end
 	ourhum.AutoRotate = true
 end
-
-
