@@ -354,7 +354,7 @@ ourRunService.PostSimulation:Connect(function()
         ourlighting.Brightness = 2
         ourlighting.GlobalShadows = false
 		ourlighting.Technology = Enum.Technology.Compatibility
-		ourlighting.LightingStyle = Enum.LightingStyle.Soft
+		--ourlighting.LightingStyle = Enum.LightingStyle.Soft
 		ourlighting.EnvironmentSpecularScale = 0
     end
 end)
@@ -418,7 +418,7 @@ ourRunService.RenderStepped:Connect(function()
         ourlighting.Brightness = 2
         ourlighting.GlobalShadows = false
 		ourlighting.Technology = Enum.Technology.Compatibility
-		ourlighting.LightingStyle = Enum.LightingStyle.Soft
+		--ourlighting.LightingStyle = Enum.LightingStyle.Soft
 		ourlighting.EnvironmentSpecularScale = 0
     end
 	if aimbot then
@@ -477,5 +477,4 @@ ourplayer.CharacterAdded:Connect(function()
 	uiinit()
 end)
 uiinit()
-
 
