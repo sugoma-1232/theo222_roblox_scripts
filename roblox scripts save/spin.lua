@@ -16,11 +16,14 @@ local strengh = 20
 local b = CFrame.Angles(0,math.pi/15 * strengh,0)
 local method = false
 local function OnDeath()
-    if isplayerdead then return end
-    isplayerdead = true
-    ourplayer.CharacterAdded:Wait()
-    ourchar = ourplayer.Character
-    task.wait(0.3)
+    if not isplayerdead then
+    	isplayerdead = true
+	end
+end
+ourhum.Died:Connect(OnDeath)
+ourplayer.CharacterAdded:Connect(function()
+	task.wait(0.2)
+	ourchar = ourplayer.Character
     ourhum = ourchar:WaitForChild("Humanoid", 0.1)
     ourhumrp = ourchar:WaitForChild("HumanoidRootPart", 0.1)
     ourcharpp = ourchar.PrimaryPart
@@ -29,7 +32,7 @@ local function OnDeath()
     end
     ourhum.Died:Connect(OnDeath)
     isplayerdead = false
-end
+end)
 ourhum.Died:Connect(OnDeath)
 if method then
 	while task.wait() and not ourinputservice:isKeyDown(Enum.KeyCode.P) do
@@ -45,3 +48,4 @@ else
 		ourhum.AutoRotate = false
 	end
 end
+
