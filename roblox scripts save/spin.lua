@@ -12,24 +12,9 @@ local isplayerdead = false
 local curtarget = nil
 local ischat = false
 local a = nil
-local strengh = 200
+local strengh = 20
 local b = CFrame.Angles(0,math.pi/15 * strengh,0)
-local method = true
-if method then
-	while task.wait() and not ourinputservice:isKeyDown(Enum.KeyCode.P) do
-		a = CFrame.new(ourhumrp.CFrame.Position.X, ourhumrp.CFrame.Position.Y, ourhumrp.CFrame.Position.Z) * b
-		b = b * CFrame.Angles(0,math.pi/15 * strengh, 0)
-		ourhumrp.CFrame = a
-	end
-else
-	ourhum.AutoRotate = false
-	while task.wait() and not ourinputservice:isKeyDown(Enum.KeyCode.P) do
-		ourhum.AutoRotate = false
-		ourhumrp.AssemblyAngularVelocity = ourhumrp.AssemblyAngularVelocity + Vector3.new(0, (math.pi/15 * strengh), 0)
-		ourhum.AutoRotate = false
-	end
-end
-
+local method = false
 local function OnDeath()
     if isplayerdead then return end
     isplayerdead = true
@@ -45,5 +30,18 @@ local function OnDeath()
     ourhum.Died:Connect(OnDeath)
     isplayerdead = false
 end
-
 ourhum.Died:Connect(OnDeath)
+if method then
+	while task.wait() and not ourinputservice:isKeyDown(Enum.KeyCode.P) do
+		a = CFrame.new(ourhumrp.CFrame.Position.X, ourhumrp.CFrame.Position.Y, ourhumrp.CFrame.Position.Z) * b
+		b = b * CFrame.Angles(0,math.pi/15 * strengh, 0)
+		ourhumrp.CFrame = a
+	end
+else
+	ourhum.AutoRotate = false
+	while task.wait() and not ourinputservice:isKeyDown(Enum.KeyCode.P) do
+		ourhum.AutoRotate = false
+		ourhumrp.AssemblyAngularVelocity = ourhumrp.AssemblyAngularVelocity + Vector3.new(0, (math.pi/15 * strengh), 0)
+		ourhum.AutoRotate = false
+	end
+end
