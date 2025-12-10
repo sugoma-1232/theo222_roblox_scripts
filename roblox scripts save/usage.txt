@@ -1,0 +1,6 @@
+goon - press N to goon, based on two other open source scripts.
+nuke - once you run it, it will atempt to tp to every player and fling them P to stop.
+spin - theres 2 spin methods 1rst(method = true) one literaly rotating your rotation value 2nd one applying rotational velocity, speed depends on method.
+blox fruits cash generator - self explainotary, my first script, based on another open source script.
+babbdigui - main thing i have worked on at least for a month.
+animationtracker(57% ai) - for exploit devs to steal public animation ids, auto tracks all animations, P to copy all of the public animations you previusly played.
