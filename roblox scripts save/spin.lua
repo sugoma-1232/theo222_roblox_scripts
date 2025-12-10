@@ -21,7 +21,6 @@ if strengh == nil then
 	strengh = 20
 end
 local b = CFrame.Angles(0,math.pi/15 * strengh,0)
-local method = false
 local function OnDeath()
     if not isplayerdead then
     	isplayerdead = true
@@ -56,4 +55,5 @@ else
 	end
 	ourhum.AutoRotate = true
 end
+
 
