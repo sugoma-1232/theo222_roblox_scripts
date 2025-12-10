@@ -1,17 +1,14 @@
-getgenv().JERK_OFF_SPEED = 20
---// self explainatory, the speed of jerking off
-getgenv().KEEP_ON_DEATH = true --// if true, gives you the jerk off tool when you
---// Fully made by @sakupenny, comments are made by me too.
-
---// define locally so they can't be changed mid usage
-local JerkOffSpeed = getgenv().JERK_OFF_SPEED
-local KeepOnDeath = getgenv().KEEP_ON_DEATH
+local JerkOffSpeed = 20
+local KeepOnDeath = true
 
 --// player defintion
 local Player = game.Players.LocalPlayer
 local Character = Player.Character or Player.CharacterAdded:Wait()
 local Humanoid = Character:WaitForChild("Humanoid", 1)
 local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart", 1) or Character.PrimaryPart
+
+
+--// the animations of the script"rbxassetid://72042024" or "rbxassetid://698251653"
 local MAIN_ANIMATIONS = {
     JERK_OFF = "rbxassetid://99198989",
     CLOSER_HANDS = "rbxassetid://168086975",
@@ -23,7 +20,9 @@ game.UserInputService.InputBegan:Connect(function(a, b)
 		JerkingOff = not JerkingOff
 	end
 end)
+--// on respawn
 Player.CharacterAdded:Connect(function()
+    --// redefine character on respawn
     Character = Player.Character
     Humanoid = Character:WaitForChild("Humanoid", 1)
     HumanoidRootPart = Character:WaitForChild("HumanoidRootPart", 1) or Character.PrimaryPart
