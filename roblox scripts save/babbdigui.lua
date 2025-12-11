@@ -15,11 +15,12 @@ local ourRunService = game:GetService('RunService')
 local Camera = Workspace.CurrentCamera
 
 local humanoidhipheight = ourhum.HipHeight
-if ourhum.HipHeight == 0 and ourhum.RigType.Value == 0 then
+if ourhum.HipHeight < 0.5 and ourhum.RigType.Value == 0 then
 	humanoidhipheight = ourchar:WaitForChild("Left Leg").Size.Y
+elseif ourhum.HipHeight < 0.5 and ourhum.RigType.Value == 1 then
+	print("dih")
 end
 humanoidhipheight += (10 / math.huge)
-print(humanoidhipheight)
 local dospeed = false
 local dojump = false
 local walkspeedvar = 400
@@ -54,15 +55,17 @@ local noclip = false
 local wasnoclip = false
 local nocliplist = {}
 
+local wasantitransparency = false
 local antitransparency = false
+local antitransparencylist = {}
 local newobjectlist = game.workspace:GetDescendants()
 
 local touchingplayer = false
 
 local aimbot = false
 
-for _, v in pairs(ourplayer.PlayerGui:GetChildren()) do
-	print(v.ClassName)
+for _, v in pairs(ourchar:GetChildren()) do
+	print(v.Name)
 end
 local function getdistance(pos1, pos2)
 	return (pos1 - pos2).Magnitude
@@ -328,10 +331,10 @@ ourRunService.PostSimulation:Connect(function()
     	    airwalkpart.Parent = workspace
 		end
         if inputservice:isKeyDown(Enum.KeyCode.LeftAlt) then
-            airwalkpart.Position = ourcharpp.Position - Vector3.new(0, (ourcharpp.Size.Y/2 + humanoidhipheight) + (airwalkpart.Size.Y/2) + 1, 0)
+            airwalkpart.Position = ourhumrp.Position - Vector3.new(0, (ourhumrp.Size.Y/2 + humanoidhipheight) + (airwalkpart.Size.Y/2) + 1, 0)
             airwalkpart.CanCollide = false
         else
-            airwalkpart.Position = ourcharpp.Position - Vector3.new(0, (ourcharpp.Size.Y/2 + humanoidhipheight) + (airwalkpart.Size.Y/2), 0)
+            airwalkpart.Position = ourhumrp.Position - Vector3.new(0, (ourhumrp.Size.Y/2 + humanoidhipheight) + (airwalkpart.Size.Y/2), 0)
             airwalkpart.CanCollide = true
         end
     end
@@ -373,10 +376,10 @@ ourRunService.PreSimulation:Connect(function()
     	    airwalkpart.Parent = workspace
 		end
         if inputservice:isKeyDown(Enum.KeyCode.LeftAlt) then
-            airwalkpart.Position = ourcharpp.Position - Vector3.new(0, (ourcharpp.Size.Y/2 + humanoidhipheight) + (airwalkpart.Size.Y/2) + 1, 0)
+            airwalkpart.Position = ourhumrp.Position - Vector3.new(0, (ourhumrp.Size.Y/2 + humanoidhipheight) + (airwalkpart.Size.Y/2) + 1, 0)
             airwalkpart.CanCollide = false
         else
-            airwalkpart.Position = ourcharpp.Position - Vector3.new(0, (ourcharpp.Size.Y/2 + humanoidhipheight) + (airwalkpart.Size.Y/2), 0)
+            airwalkpart.Position = ourhumrp.Position - Vector3.new(0, (ourhumrp.Size.Y/2 + humanoidhipheight) + (airwalkpart.Size.Y/2), 0)
             airwalkpart.CanCollide = true
         end
     end
@@ -430,15 +433,21 @@ ourRunService.RenderStepped:Connect(function()
 		--end)
 	end
     if antitransparency then
+		wasantitransparency = true
         for i, v in pairs(newobjectlist) do
             if v:IsA("BasePart") and not (v.Name == "HumanoidRootPart") then
                 if v.Transparency > 0.95 then
                     v.Transparency = 0.75
+					table.insert(antitransparencylist, v)
                 end
             end
         end
         table.clear(newobjectlist)
-    end
+    elseif wasantitransparency and #antitransparencylist > 0 then
+		for _, v in pairs(antitransparencylist) do
+			v.Transparency = 1
+		end
+	end
     if highlightplayers then
         washighlightingplayers = true
         for i, v in pairs(Players:GetChildren()) do
