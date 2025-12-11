@@ -44,6 +44,12 @@ local antifling = false
 local wasantifling = false
 local antiflinglist = {}
 
+local dotptool = true
+local tptool = nil
+
+local dotweentool = false
+local tweentool = nil
+
 local noclip = false
 local wasnoclip = false
 local nocliplist = {}
@@ -157,27 +163,24 @@ local function uiinit()
 	buttontemplate.FontFace = Font.new("rbxasset://fonts/families/Jura.json", Enum.FontWeight.Medium, Enum.FontStyle.Normal)
 	buttontemplate.Text = "template"
 	buttontemplate.TextColor3 = Color3.new(1, 1, 1)
-	--[[
-	buttontemplate.Parent = scrollingframe
-	buttontemplate.MouseButton1Click:Connect(function()
-		toggleabutton(buttontemplate)
-	end)
-	]]
-	local noclipbutton = buttontemplate:Clone();noclipbutton.Text = "noclip";noclipbutton.Parent = scrollingframe;noclipbutton.Position = UDim2.new(0,0,0,0)
-	local flingbutton = buttontemplate:Clone();flingbutton.Text = "fling";flingbutton.Parent = scrollingframe;flingbutton.Position = UDim2.new(0,0,0,(21 * 1))
-	local antiflingbutton = buttontemplate:Clone();antiflingbutton.Text = "antifling";antiflingbutton.Parent = scrollingframe;antiflingbutton.Position = UDim2.new(0,0,0,(21 * 2))
-	local airwalkbutton = buttontemplate:Clone();airwalkbutton.Text = "airwalk";airwalkbutton.Parent = scrollingframe;airwalkbutton.Position = UDim2.new(0,0,0,(21 * 3))
-	local espbutton = buttontemplate:Clone();espbutton.Text = "esp";espbutton.Parent = scrollingframe;espbutton.Position = UDim2.new(0,0,0,(21 * 4))
-	local antiinvisbutton = buttontemplate:Clone();antiinvisbutton.Text = "anti invis";antiinvisbutton.Parent = scrollingframe;antiinvisbutton.Position = UDim2.new(0,0,0,(21 * 5))
-	local fullbrightbutton = buttontemplate:Clone();fullbrightbutton.Text = "fullbright";fullbrightbutton.Parent = scrollingframe;fullbrightbutton.Position = UDim2.new(0,0,0,(21 * 6))
-	local aimbotbutton = buttontemplate:Clone();aimbotbutton.Text = "aimbot(wip)";aimbotbutton.Parent = scrollingframe;aimbotbutton.Position = UDim2.new(0,0,0,(21 * 7))
-	local darkdexbutton = buttontemplate:Clone();darkdexbutton.Text = "darkdex";darkdexbutton.Parent = scrollingframe;darkdexbutton.Position = UDim2.new(0,0,0,(21 * 8))
-	local simplespybutton = buttontemplate:Clone();simplespybutton.Text = "simplespy";simplespybutton.Parent = scrollingframe;simplespybutton.Position = UDim2.new(0,0,0,(21 * 9))
-	local yeildbutton = buttontemplate:Clone();yeildbutton.Text = "inf yeild";yeildbutton.Parent = scrollingframe;yeildbutton.Position = UDim2.new(0,0,0,(21 * 10))
-	local goonbutton = buttontemplate:Clone();goonbutton.Text = "goon scr(n)";goonbutton.Parent = scrollingframe;goonbutton.Position = UDim2.new(0,0,0,(21 * 11))
-	local spinbutton = buttontemplate:Clone();spinbutton.Text = "spin scr(p)";spinbutton.Parent = scrollingframe;spinbutton.Position = UDim2.new(0,0,0,(21 * 12))
-	local nukebutton = buttontemplate:Clone();nukebutton.Text = "nuke scr(p)";nukebutton.Parent = scrollingframe;nukebutton.Position = UDim2.new(0,0,0,(21 * 13))
-	local movescriptbutton = buttontemplate:Clone();movescriptbutton.Text = "tp scr(...)";movescriptbutton.Parent = scrollingframe;movescriptbutton.Position = UDim2.new(0,0,0,(21 * 14))
+	
+	------------------------------------------------
+
+	local noclipbutton = buttontemplate:Clone();noclipbutton.Text = "noclip";noclipbutton.Parent = scrollingframe;noclipbutton.Position = UDim2.new(0,0,0,0);noclipbutton.MouseEnter:Connect(function() noclipbutton.Position = noclipbutton.Position + UDim2.new(0,0,0,2) end);noclipbutton.MouseLeave:Connect(function() noclipbutton.Position = noclipbutton.Position - UDim2.new(0,0,0,2) end)
+	local flingbutton = buttontemplate:Clone();flingbutton.Text = "fling";flingbutton.Parent = scrollingframe;flingbutton.Position = UDim2.new(0,0,0,(21 * 1));flingbutton.MouseEnter:Connect(function() flingbutton.Position = flingbutton.Position + UDim2.new(0,0,0,2) end);flingbutton.MouseLeave:Connect(function() flingbutton.Position = flingbutton.Position - UDim2.new(0,0,0,2) end)
+	local antiflingbutton = buttontemplate:Clone();antiflingbutton.Text = "antifling";antiflingbutton.Parent = scrollingframe;antiflingbutton.Position = UDim2.new(0,0,0,(21 * 2));antiflingbutton.MouseEnter:Connect(function() antiflingbutton.Position = antiflingbutton.Position + UDim2.new(0,0,0,2) end);antiflingbutton.MouseLeave:Connect(function() antiflingbutton.Position = antiflingbutton.Position - UDim2.new(0,0,0,2) end)
+	local airwalkbutton = buttontemplate:Clone();airwalkbutton.Text = "airwalk";airwalkbutton.Parent = scrollingframe;airwalkbutton.Position = UDim2.new(0,0,0,(21 * 3));airwalkbutton.MouseEnter:Connect(function() airwalkbutton.Position = airwalkbutton.Position + UDim2.new(0,0,0,2) end);airwalkbutton.MouseLeave:Connect(function() airwalkbutton.Position = airwalkbutton.Position - UDim2.new(0,0,0,2) end)
+	local espbutton = buttontemplate:Clone();espbutton.Text = "esp";espbutton.Parent = scrollingframe;espbutton.Position = UDim2.new(0,0,0,(21 * 4));espbutton.MouseEnter:Connect(function() espbutton.Position = espbutton.Position + UDim2.new(0,0,0,2) end);espbutton.MouseLeave:Connect(function() espbutton.Position = espbutton.Position - UDim2.new(0,0,0,2) end)
+	local antiinvisbutton = buttontemplate:Clone();antiinvisbutton.Text = "anti invis";antiinvisbutton.Parent = scrollingframe;antiinvisbutton.Position = UDim2.new(0,0,0,(21 * 5));antiinvisbutton.MouseEnter:Connect(function() antiinvisbutton.Position = antiinvisbutton.Position + UDim2.new(0,0,0,2) end);antiinvisbutton.MouseLeave:Connect(function() antiinvisbutton.Position = antiinvisbutton.Position - UDim2.new(0,0,0,2) end)
+	local fullbrightbutton = buttontemplate:Clone();fullbrightbutton.Text = "fullbright";fullbrightbutton.Parent = scrollingframe;fullbrightbutton.Position = UDim2.new(0,0,0,(21 * 6));fullbrightbutton.MouseEnter:Connect(function() fullbrightbutton.Position = fullbrightbutton.Position + UDim2.new(0,0,0,2) end);fullbrightbutton.MouseLeave:Connect(function() fullbrightbutton.Position = fullbrightbutton.Position - UDim2.new(0,0,0,2) end)
+	local aimbotbutton = buttontemplate:Clone();aimbotbutton.Text = "aimbot(wip)";aimbotbutton.Parent = scrollingframe;aimbotbutton.Position = UDim2.new(0,0,0,(21 * 7));aimbotbutton.MouseEnter:Connect(function() aimbotbutton.Position = aimbotbutton.Position + UDim2.new(0,0,0,2) end);aimbotbutton.MouseLeave:Connect(function() aimbotbutton.Position = aimbotbutton.Position - UDim2.new(0,0,0,2) end)
+	local darkdexbutton = buttontemplate:Clone();darkdexbutton.Text = "darkdex";darkdexbutton.Parent = scrollingframe;darkdexbutton.Position = UDim2.new(0,0,0,(21 * 8));darkdexbutton.MouseEnter:Connect(function() darkdexbutton.Position = darkdexbutton.Position + UDim2.new(0,0,0,2) end);darkdexbutton.MouseLeave:Connect(function() darkdexbutton.Position = darkdexbutton.Position - UDim2.new(0,0,0,2) end)
+	local simplespybutton = buttontemplate:Clone();simplespybutton.Text = "simplespy";simplespybutton.Parent = scrollingframe;simplespybutton.Position = UDim2.new(0,0,0,(21 * 9));simplespybutton.MouseEnter:Connect(function() simplespybutton.Position = simplespybutton.Position + UDim2.new(0,0,0,2) end);simplespybutton.MouseLeave:Connect(function() simplespybutton.Position = simplespybutton.Position - UDim2.new(0,0,0,2) end)
+	local yeildbutton = buttontemplate:Clone();yeildbutton.Text = "inf yeild";yeildbutton.Parent = scrollingframe;yeildbutton.Position = UDim2.new(0,0,0,(21 * 10));yeildbutton.MouseEnter:Connect(function() yeildbutton.Position = yeildbutton.Position + UDim2.new(0,0,0,2) end);yeildbutton.MouseLeave:Connect(function() yeildbutton.Position = yeildbutton.Position - UDim2.new(0,0,0,2) end)
+	local goonbutton = buttontemplate:Clone();goonbutton.Text = "goon scr(n)";goonbutton.Parent = scrollingframe;goonbutton.Position = UDim2.new(0,0,0,(21 * 11));goonbutton.MouseEnter:Connect(function() goonbutton.Position = goonbutton.Position + UDim2.new(0,0,0,2) end);goonbutton.MouseLeave:Connect(function() goonbutton.Position = goonbutton.Position - UDim2.new(0,0,0,2) end)
+	local spinbutton = buttontemplate:Clone();spinbutton.Text = "spin scr(p)";spinbutton.Parent = scrollingframe;spinbutton.Position = UDim2.new(0,0,0,(21 * 12));spinbutton.MouseEnter:Connect(function() spinbutton.Position = spinbutton.Position + UDim2.new(0,0,0,2) end);spinbutton.MouseLeave:Connect(function() spinbutton.Position = spinbutton.Position - UDim2.new(0,0,0,2) end)
+	local nukebutton = buttontemplate:Clone();nukebutton.Text = "nuke scr(p)";nukebutton.Parent = scrollingframe;nukebutton.Position = UDim2.new(0,0,0,(21 * 13));nukebutton.MouseEnter:Connect(function() nukebutton.Position = nukebutton.Position + UDim2.new(0,0,0,2) end);nukebutton.MouseLeave:Connect(function() nukebutton.Position = nukebutton.Position - UDim2.new(0,0,0,2) end)
+	local movescriptbutton = buttontemplate:Clone();movescriptbutton.Text = "tp scr(...)";movescriptbutton.Parent = scrollingframe;movescriptbutton.Position = UDim2.new(0,0,0,(21 * 14));movescriptbutton.MouseEnter:Connect(function() movescriptbutton.Position = movescriptbutton.Position + UDim2.new(0,0,0,2) end);movescriptbutton.MouseLeave:Connect(function() movescriptbutton.Position = movescriptbutton.Position - UDim2.new(0,0,0,2) end)
 	if noclip then toggleabutton(noclipbutton) end
 	if fling then toggleabutton(flingbutton) end
 	if antifling then toggleabutton(antiflingbutton) end
