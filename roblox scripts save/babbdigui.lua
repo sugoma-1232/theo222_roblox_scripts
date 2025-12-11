@@ -362,6 +362,9 @@ ourRunService.PostSimulation:Connect(function()
 		ourlighting.Technology = Enum.Technology.Compatibility
 		--ourlighting.LightingStyle = Enum.LightingStyle.Soft
 		ourlighting.EnvironmentSpecularScale = 0
+		for _, v in pairs(ourlighting:GetChildren()) do
+			v:Destroy()
+		end
     end
 end)
 ourRunService.PreSimulation:Connect(function()
@@ -426,6 +429,9 @@ ourRunService.RenderStepped:Connect(function()
 		ourlighting.Technology = Enum.Technology.Compatibility
 		--ourlighting.LightingStyle = Enum.LightingStyle.Soft
 		ourlighting.EnvironmentSpecularScale = 0
+		for _, v in pairs(ourlighting:GetChildren()) do
+			v:Destroy()
+		end
     end
 	if aimbot then
 		--pcall(function()
