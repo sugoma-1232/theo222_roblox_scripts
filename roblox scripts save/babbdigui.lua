@@ -15,15 +15,13 @@ local ourRunService = game:GetService('RunService')
 local Camera = Workspace.CurrentCamera
 
 local humanoidhipheight = ourhum.HipHeight
-if ourhum.HipHeight < 0.5 and ourhum.RigType.Value == 0 then
+if ourhum.HipHeight == 0 and ourhum.RigType.Value == 0 then
 	humanoidhipheight = ourchar:WaitForChild("Left Leg").Size.Y
-elseif ourhum.HipHeight < 0.5 and ourhum.RigType.Value == 1 then
-	print("dih")
 end
 humanoidhipheight += (10 / math.huge)
 local dospeed = false
 local dojump = false
-local walkspeedvar = 400
+local walkspeedvar = ourhum.WalkSpeed
 local jumppowervar = ourhum.JumpPower
 local highlightplayers = false
 local washighlightingplayers = false
@@ -166,9 +164,23 @@ local function uiinit()
 	buttontemplate.FontFace = Font.new("rbxasset://fonts/families/Jura.json", Enum.FontWeight.Medium, Enum.FontStyle.Normal)
 	buttontemplate.Text = "template"
 	buttontemplate.TextColor3 = Color3.new(1, 1, 1)
-	
-	------------------------------------------------
+	local inputtemplate = Instance.new("TextBox")
+	inputtemplate.Size = UDim2.new(0,150,0,21)
+	inputtemplate.BackgroundTransparency = 0.8
+	inputtemplate.BackgroundColor3 = Color3.new(0.7, 0.7, 0.7)
+	inputtemplate.TextXAlignment = Enum.TextXAlignment.Left
+	inputtemplate.TextYAlignment = Enum.TextYAlignment.Bottom
+	inputtemplate.TextScaled = false
+	inputtemplate.TextSize = 25
+	inputtemplate.FontFace = Font.new("rbxasset://fonts/families/Jura.json", Enum.FontWeight.Medium, Enum.FontStyle.Normal)
+	inputtemplate.PlaceholderText = "template"
+	inputtemplate.Text = ""
+	inputtemplate.TextColor3 = Color3.new(1, 1, 1)
+	inputtemplate.MultiLine = false
+	inputtemplate.BorderSizePixel = 0
 
+	------------------------------------------------
+	
 	local noclipbutton = buttontemplate:Clone();noclipbutton.Text = "noclip";noclipbutton.Parent = scrollingframe;noclipbutton.Position = UDim2.new(0,0,0,0);noclipbutton.MouseEnter:Connect(function() noclipbutton.Position = noclipbutton.Position + UDim2.new(0,0,0,2) end);noclipbutton.MouseLeave:Connect(function() noclipbutton.Position = noclipbutton.Position - UDim2.new(0,0,0,2) end)
 	local flingbutton = buttontemplate:Clone();flingbutton.Text = "fling";flingbutton.Parent = scrollingframe;flingbutton.Position = UDim2.new(0,0,0,(21 * 1));flingbutton.MouseEnter:Connect(function() flingbutton.Position = flingbutton.Position + UDim2.new(0,0,0,2) end);flingbutton.MouseLeave:Connect(function() flingbutton.Position = flingbutton.Position - UDim2.new(0,0,0,2) end)
 	local antiflingbutton = buttontemplate:Clone();antiflingbutton.Text = "antifling";antiflingbutton.Parent = scrollingframe;antiflingbutton.Position = UDim2.new(0,0,0,(21 * 2));antiflingbutton.MouseEnter:Connect(function() antiflingbutton.Position = antiflingbutton.Position + UDim2.new(0,0,0,2) end);antiflingbutton.MouseLeave:Connect(function() antiflingbutton.Position = antiflingbutton.Position - UDim2.new(0,0,0,2) end)
@@ -184,6 +196,17 @@ local function uiinit()
 	local spinbutton = buttontemplate:Clone();spinbutton.Text = "spin scr(p)";spinbutton.Parent = scrollingframe;spinbutton.Position = UDim2.new(0,0,0,(21 * 12));spinbutton.MouseEnter:Connect(function() spinbutton.Position = spinbutton.Position + UDim2.new(0,0,0,2) end);spinbutton.MouseLeave:Connect(function() spinbutton.Position = spinbutton.Position - UDim2.new(0,0,0,2) end)
 	local nukebutton = buttontemplate:Clone();nukebutton.Text = "nuke scr(p)";nukebutton.Parent = scrollingframe;nukebutton.Position = UDim2.new(0,0,0,(21 * 13));nukebutton.MouseEnter:Connect(function() nukebutton.Position = nukebutton.Position + UDim2.new(0,0,0,2) end);nukebutton.MouseLeave:Connect(function() nukebutton.Position = nukebutton.Position - UDim2.new(0,0,0,2) end)
 	local movescriptbutton = buttontemplate:Clone();movescriptbutton.Text = "tp scr(...)";movescriptbutton.Parent = scrollingframe;movescriptbutton.Position = UDim2.new(0,0,0,(21 * 14));movescriptbutton.MouseEnter:Connect(function() movescriptbutton.Position = movescriptbutton.Position + UDim2.new(0,0,0,2) end);movescriptbutton.MouseLeave:Connect(function() movescriptbutton.Position = movescriptbutton.Position - UDim2.new(0,0,0,2) end)
+	local speedinput = inputtemplate:Clone();speedinput.PlaceholderText = "speed:";speedinput.Parent = scrollingframe;speedinput.Position = UDim2.new(0,0,0,(21 * 15));speedinput.MouseEnter:Connect(function() speedinput.Position = speedinput.Position + UDim2.new(0,0,0,2) end);speedinput.MouseLeave:Connect(function() speedinput.Position = speedinput.Position - UDim2.new(0,0,0,2) end)
+	local speedbutton = buttontemplate:Clone();speedbutton.Text = "force speed(^)";speedbutton.Parent = scrollingframe;speedbutton.Position = UDim2.new(0,0,0,(21 * 16));speedbutton.MouseEnter:Connect(function() speedbutton.Position = speedbutton.Position + UDim2.new(0,0,0,2) end);speedbutton.MouseLeave:Connect(function() speedbutton.Position = speedbutton.Position - UDim2.new(0,0,0,2) end)
+	local jumpinput = inputtemplate:Clone();jumpinput.PlaceholderText = "jumppower:";jumpinput.Parent = scrollingframe;jumpinput.Position = UDim2.new(0,0,0,(21 * 17));jumpinput.MouseEnter:Connect(function() jumpinput.Position = jumpinput.Position + UDim2.new(0,0,0,2) end);jumpinput.MouseLeave:Connect(function() jumpinput.Position = jumpinput.Position - UDim2.new(0,0,0,2) end)
+	local jumpbutton = buttontemplate:Clone();jumpbutton.Text = "force jumpwr";jumpbutton.Parent = scrollingframe;jumpbutton.Position = UDim2.new(0,0,0,(21 * 18));jumpbutton.MouseEnter:Connect(function() jumpbutton.Position = jumpbutton.Position + UDim2.new(0,0,0,2) end);jumpbutton.MouseLeave:Connect(function() jumpbutton.Position = jumpbutton.Position - UDim2.new(0,0,0,2) end)
+
+
+
+
+
+
+
 	if noclip then toggleabutton(noclipbutton) end
 	if fling then toggleabutton(flingbutton) end
 	if antifling then toggleabutton(antiflingbutton) end
@@ -245,6 +268,24 @@ local function uiinit()
 	nukebutton.MouseButton1Click:Connect(function()
 		task.spawn(runnukescript)
 	end)
+	speedinput:GetPropertyChangedSignal("Text"):Connect(function()
+		pcall(function()
+			walkspeedvar = tonumber(speedinput.Text)
+		end)
+	end)
+	jumpinput:GetPropertyChangedSignal("Text"):Connect(function()
+		pcall(function()
+			jumppowervar = tonumber(jumpinput.Text)
+		end)
+	end)
+	speedbutton.MouseButton1Click:Connect(function()
+		toggleabutton(speedbutton)
+		dospeed = not dospeed
+	end)
+	jumpbutton.MouseButton1Click:Connect(function()
+		toggleabutton(jumpbutton)
+		dojump = not dojump
+	end)
 	gui.Parent = ourplayer.PlayerGui
 
 end
@@ -270,9 +311,6 @@ function findclosestplayer()
 	end
 	for _,v in pairs(Players:GetPlayers()) do
 		if (not (v == ourplayer)) and (not (v == nil)) then
-			-- for _, d in pairs(v:GetDescendants()) do
-			-- 	print(d.Name)
-			-- end
 			pcall(function()
 				if (getdistance(ourhumrp.CFrame.Position, curtarget.Character.HumanoidRootPart.CFrame.Position) > getdistance(ourhumrp.CFrame.Position, v.Character.HumanoidRootPart.CFrame.Position)) then
 					curtarget = v
