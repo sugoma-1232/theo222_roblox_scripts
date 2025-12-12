@@ -43,11 +43,12 @@ local antifling = false
 local wasantifling = false
 local antiflinglist = {}
 
-local dotptool = true
+local dotptool = false
 local tptool = nil
 
 local dotweentool = false
 local tweentool = nil
+local tweenspeed = 60
 
 local noclip = false
 local wasnoclip = false
@@ -64,6 +65,15 @@ local aimbot = false
 
 for _, v in pairs(ourchar:GetChildren()) do
 	print(v.Name)
+end
+local function addtool(name, tooltip)
+	local tool = Instance.new("Tool")
+	tool.Name = name
+	tool.CanBeDropped = false
+	tool.RequiresHandle = false
+	tool.ToolTip = tooltip
+	tool.Parent = ourplayer:WaitForChild("Backpack")
+	return tool
 end
 local function getdistance(pos1, pos2)
 	return (pos1 - pos2).Magnitude
@@ -93,6 +103,7 @@ end
 local function runsubsonicscript()
 	loadstring(game:HttpGet('https://raw.githubusercontent.com/sugoma-1232/theo222_roblox_scripts/refs/heads/main/roblox%20scripts%20save/subsonic.lua'))()
 end
+
 local function uiinit()
 	local function toggleabutton(a)
 		local b = a.FontFace["Style"]
@@ -200,9 +211,9 @@ local function uiinit()
 	local speedbutton = buttontemplate:Clone();speedbutton.Text = "force speed";speedbutton.Parent = scrollingframe;speedbutton.Position = UDim2.new(0,0,0,(21 * 16));speedbutton.MouseEnter:Connect(function() speedbutton.Position = speedbutton.Position + UDim2.new(0,0,0,2) end);speedbutton.MouseLeave:Connect(function() speedbutton.Position = speedbutton.Position - UDim2.new(0,0,0,2) end)
 	local jumpinput = inputtemplate:Clone();jumpinput.PlaceholderText = "jumppower:";jumpinput.Parent = scrollingframe;jumpinput.Position = UDim2.new(0,0,0,(21 * 17));jumpinput.MouseEnter:Connect(function() jumpinput.Position = jumpinput.Position + UDim2.new(0,0,0,2) end);jumpinput.MouseLeave:Connect(function() jumpinput.Position = jumpinput.Position - UDim2.new(0,0,0,2) end)
 	local jumpbutton = buttontemplate:Clone();jumpbutton.Text = "force jumpwr";jumpbutton.Parent = scrollingframe;jumpbutton.Position = UDim2.new(0,0,0,(21 * 18));jumpbutton.MouseEnter:Connect(function() jumpbutton.Position = jumpbutton.Position + UDim2.new(0,0,0,2) end);jumpbutton.MouseLeave:Connect(function() jumpbutton.Position = jumpbutton.Position - UDim2.new(0,0,0,2) end)
-
-
-
+	local tpbutton = buttontemplate:Clone();tpbutton.Text = "tp tool";tpbutton.Parent = scrollingframe;tpbutton.Position = UDim2.new(0,0,0,(21 * 19));tpbutton.MouseEnter:Connect(function() tpbutton.Position = tpbutton.Position + UDim2.new(0,0,0,2) end);tpbutton.MouseLeave:Connect(function() tpbutton.Position = tpbutton.Position - UDim2.new(0,0,0,2) end)
+	local tweeninput = inputtemplate:Clone();tweeninput.PlaceholderText = "tween speed:";tweeninput.Parent = scrollingframe;tweeninput.Position = UDim2.new(0,0,0,(21 * 20));tweeninput.MouseEnter:Connect(function() tweeninput.Position = tweeninput.Position + UDim2.new(0,0,0,2) end);tweeninput.MouseLeave:Connect(function() tweeninput.Position = tweeninput.Position - UDim2.new(0,0,0,2) end)
+	local tweenbutton = buttontemplate:Clone();tweenbutton.Text = "tween tool";tweenbutton.Parent = scrollingframe;tweenbutton.Position = UDim2.new(0,0,0,(21 * 21));tweenbutton.MouseEnter:Connect(function() tweenbutton.Position = tweenbutton.Position + UDim2.new(0,0,0,2) end);tweenbutton.MouseLeave:Connect(function() tweenbutton.Position = tweenbutton.Position - UDim2.new(0,0,0,2) end)
 
 
 
@@ -215,6 +226,10 @@ local function uiinit()
 	if antitransparency then toggleabutton(antiinvisbutton) end
 	if fullbright then toggleabutton(fullbrightbutton) end
 	if aimbot then toggleabutton(aimbotbutton) end
+	if dojump then toggleabutton(jumpbutton) end
+	if dospeed then toggleabutton(speedbutton) end
+	if dotptool then toggleabutton(tpbutton) end
+	if dotweentool then toggleabutton(tweenbutton) end
 	noclipbutton.MouseButton1Click:Connect(function()
 		toggleabutton(noclipbutton)
 		noclip = not noclip
@@ -286,6 +301,43 @@ local function uiinit()
 		toggleabutton(jumpbutton)
 		dojump = not dojump
 	end)
+	tpbutton.MouseButton1Click:Connect(function()
+		toggleabutton(tpbutton)
+		dotptool = not dotptool
+		if dotptool then
+			tptool = addtool("TP", "")
+			tptool.Activated:Connect(function()
+			ourhumrp.CFrame = ourplayer:GetMouse().Hit
+			end)
+		else
+			tptool:Destroy()
+		end
+	end)
+	tweeninput:GetPropertyChangedSignal("Text"):Connect(function()
+		pcall(function()
+			tweenspeed = tonumber(tweeninput.Text)
+		end)
+	end)
+	tweenbutton.MouseButton1Click:Connect(function()
+		toggleabutton(tweenbutton)
+		dotweentool = not dotweentool
+		if dotweentool then
+			tweentool = addtool("TWEEN", "")
+			tweentool.Activated:Connect(function()
+				local pospoint = ourplayer:GetMouse().Hit
+				local Magnitude = (ourhumrp.Position - pospoint.Position).Magnitude
+				while not (Magnitude < 1) do
+        			local Direction = (pospoint.Position - ourhumrp.Position).unit
+        			ourhumrp.CFrame = ourhumrp.CFrame + Direction * (tweenspeed * task.wait())
+        			Magnitude = (ourhumrp.Position - pospoint.Position).Magnitude
+					ourhumrp.Velocity = Direction * 2
+				end
+			end)
+		else
+			tweentool:Destroy()
+		end
+	end)
+	
 	gui.Parent = ourplayer.PlayerGui
 
 end
@@ -531,6 +583,25 @@ ourplayer.CharacterAdded:Connect(function()
     ourhum.Died:Connect(OnDeath)
     isplayerdead = false
 	uiinit()
+	if dotptool then
+		tptool = addtool("TP", "")
+		tptool.Activated:Connect(function()
+			ourhumrp.CFrame = ourplayer:GetMouse().Hit
+		end)
+	end
+	if dotweentool then
+		tweentool = addtool("TWEEN", "")
+		tweentool.Activated:Connect(function()
+			local pospoint = ourplayer:GetMouse().Hit
+			local Magnitude = (ourhumrp.Position - pospoint.Position).Magnitude
+			while not (Magnitude < 1) do
+        		local Direction = (pospoint.Position - ourhumrp.Position).unit
+        		ourhumrp.CFrame = ourhumrp.CFrame + Direction * (tweenspeed * task.wait())
+        		Magnitude = (ourhumrp.Position - pospoint.Position).Magnitude
+				ourhumrp.Velocity = Direction * 2
+			end
+		end)
+	end
 end)
 uiinit()
 
