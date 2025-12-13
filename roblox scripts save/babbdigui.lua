@@ -13,7 +13,6 @@ local ourlighting = game:WaitForChild("Lighting")
 local Objectlist = game.workspace:GetDescendants()
 local ourRunService = game:GetService('RunService')
 local Camera = Workspace.CurrentCamera
-
 local humanoidhipheight = ourhum.HipHeight
 if ourhum.HipHeight == 0 and ourhum.RigType.Value == 0 then
 	humanoidhipheight = ourchar:WaitForChild("Left Leg").Size.Y
@@ -362,7 +361,7 @@ function findclosestplayer()
 		
 	end
 	for _,v in pairs(Players:GetPlayers()) do
-		if (not (v == ourplayer)) and (not (v == nil)) then
+		if ((not (v == ourplayer)) and (not (v == nil))) and not ((v.Team == ourplayer.Team) and not (ourplayer.Team == nil)) then
 			pcall(function()
 				if (getdistance(ourhumrp.CFrame.Position, curtarget.Character.HumanoidRootPart.CFrame.Position) > getdistance(ourhumrp.CFrame.Position, v.Character.HumanoidRootPart.CFrame.Position)) then
 					curtarget = v
